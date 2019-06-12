@@ -2,7 +2,7 @@
 var authenticate = require('./controllers/Authorization');
 
 
-module.exports = function (app, controllers){
+module.exports = (app, controllers) => {
 
     // User Token Get
     app.route('/user/token/:emailId')
@@ -12,4 +12,10 @@ module.exports = function (app, controllers){
     // User Creation
     app.route('/add/user/')
         .post(authenticate.isAuthenticated, controllers.userControl.addUser);
+
+    app.route('/create/project')
+        .post(authenticate.isAuthenticated, controllers.projectControl.createProject);
+
+    app.route('/create/folder')
+        .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
 }

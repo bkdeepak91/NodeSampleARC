@@ -1,21 +1,19 @@
-var project  = require('../repository/Project');
+var folder  = require('../repository/Folder');
 
-var projectControl = {
-    createProject : (req, res) => {
-        var Project = {
+var folderControl = {
+    createFolder : (req, res) => {
+        var Folder = {
             name: req.body.name,
-            city: req.body.city,
-            createdBy: 109
+            projectId: req.body.projectId,
+            createdBy: 110
         };
-
-        project.createProject(Project, (err, projectData) => {
+        folder.createFolder(Folder, (err, folderData) => {
             var apiResult = {};
             if(err){
                 apiResult.metaData = {
                     success : false,
                     error : err
-                };
-
+                }; 
                 apiResult.data = [];
                 res.json(apiResult);
             } else {
@@ -24,11 +22,11 @@ var projectControl = {
                     rows : 1
                 };
 
-                apiResult.data = projectData;
+                apiResult.data = folderData;
                 res.json(apiResult);
             }
         });
     }
 };
 
-module.exports = projectControl;
+module.exports = folderControl;
