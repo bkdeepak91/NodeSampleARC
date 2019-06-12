@@ -12,7 +12,10 @@ module.exports = (app, controllers) => {
     // User Creation
     app.route('/add/user/')
         .post(authenticate.isAuthenticated, controllers.userControl.addUser);
-
+        
+    app.route('/update/user/')
+        .put(authenticate.isAuthenticated, controllers.userControl.updateUser);
+        
     app.route('/create/project')
         .post(authenticate.isAuthenticated, controllers.projectControl.createProject);
 

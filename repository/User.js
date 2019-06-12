@@ -30,7 +30,18 @@ var User = {
                 if(error) throw error;
                 done(error, userCreated);
         });
+    },
+
+    updateUser : (user, done) =>{
+        return db.query(
+            "UPDATE ac_users SET name = ? , email = ?, type = ? WHERE id = ?;",
+            [user.name, user.email, user.type, user.userId],
+            (error, userupdated, fields) =>{
+                if(error) throw error;
+                done(error, userupdated);
+        });
     }
+
 }
 
 
