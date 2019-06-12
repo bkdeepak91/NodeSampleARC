@@ -1,6 +1,6 @@
 //require dependencies
 const express = require('express');
-const passport = require('passport');
+// const passport = require('passport');
 
 //handlers
 const controllers = require('./controllers');
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 routes(app, controllers);
 const port = process.env.PORT || 4200;

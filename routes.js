@@ -1,17 +1,12 @@
 'use strict';
-var authHandler = require('./handlers/AuthHandler');
+var authHandler = require('./controllers/UserControl');
 
-module.exports = function (app, handlers){
-    
-    // //user issues
-    // app.route('/user/issue/:id')
-    //     .get(authHandler.isAuthenticated, handlers.userIssue.getIssue)
-    //     .post(authHandler.isAuthenticated, handlers.userIssue.raiseIssue)
-    //     .put(authHandler.isAuthenticated, handlers.userIssue.updateIssue)
-    //     .delete(authHandler.isAuthenticated, handlers.userIssue.deleteIssue);
-    // app.route('/my/pending/issues')
-    //     .get(authHandler.isAuthenticated, handlers.userIssue.getPendingIssuesByUser)
-    // app.route('/issue/:id')
-    //     .get(authHandler.isAuthenticated, handlers.userIssue.getIssue)
 
+module.exports = function (app, controllers){
+
+    // User Creation & Authentication
+    app.route('/user/token/:emailId')
+        .get( controllers.userControl.getToken);
+
+        
 }
