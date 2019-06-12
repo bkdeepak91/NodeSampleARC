@@ -5,7 +5,7 @@ var folderControl = {
         var Folder = {
             name: req.body.name,
             projectId: req.body.projectId,
-            createdBy: 110
+            createdBy: req.user.id
         };
         folder.createFolder(Folder, (err, folderData) => {
             var apiResult = {};

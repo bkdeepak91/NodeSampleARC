@@ -5,7 +5,7 @@ var projectControl = {
         var Project = {
             name: req.body.name,
             city: req.body.city,
-            createdBy: 109
+            createdBy: req.user.id
         };
 
         project.createProject(Project, (err, projectData) => {
