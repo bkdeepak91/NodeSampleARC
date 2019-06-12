@@ -14,11 +14,11 @@ var User = {
 
     getUserByToken : (token, done) => {
         return db.query(
-            "SELECT id, name, email, type FROM ac_users WHERE md5(id) = ?;",
+            "SELECT id , type FROM ac_users WHERE md5(id) = ?;",
             [token],
             (error, user, fields) =>{
                 if(error) throw error;
-                done(error, user);
+                done(error, user[0]);
         });
     },
 
@@ -26,9 +26,9 @@ var User = {
         return db.query(
             "INSERT INTO ac_users (name, email, type, created_by) values(?,?,?,?);",
             [user.name, user.email, user.type, user.createdBy],
-            (error, user, fields) =>{
+            (error, userCreated, fields) =>{
                 if(error) throw error;
-                done(user);
+                done(error, userCreated);
         });
     }
 }

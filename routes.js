@@ -1,12 +1,15 @@
 'use strict';
-var authHandler = require('./controllers/UserControl');
+var authenticate = require('./controllers/Authorization');
 
 
 module.exports = function (app, controllers){
 
-    // User Creation & Authentication
+    // User Token Get
     app.route('/user/token/:emailId')
-        .get( controllers.userControl.getToken);
-
-        
+        .get(controllers.userControl.getToken);
+    
+   
+    // User Creation
+    app.route('/add/user/')
+        .post(authenticate.isAuthenticated, controllers.userControl.addUser);
 }
