@@ -10,5 +10,6 @@ module.exports = (app, controllers) => {
     app.route('/create/project')
         .post(controllers.projectControl.createProject);
 
-        
+    app.route('/create/folder')
+        .post(controllers.folderControl.createFolder);
 }
