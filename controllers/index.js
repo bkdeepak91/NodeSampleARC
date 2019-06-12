@@ -1,7 +1,9 @@
 var userControl = require('./UserControl');
+var projectControl = require('./ProjectControl');
 
 var controllers = {
-    userControl
+    userControl,
+    projectControl
 }
 
 module.exports = controllers;
