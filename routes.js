@@ -26,21 +26,27 @@ module.exports = (app, controllers) => {
         .get(authenticate.isAuthenticated, controllers.projectControl.getProject)
         .put(authenticate.isAuthenticated, controllers.projectControl.updateProject);
 
+    // Project Share
     app.route('/share/project')
         .post(authenticate.isAuthenticated, controllers.projectControl.shareProject);
 
+    //create folder
     app.route('/create/folder')
         .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
-
+    
+    //share folder
     app.route('/share/folder')
         .post(authenticate.isAuthenticated, controllers.folderControl.shareFolder);
-
+    
+    //folder get
     app.route('/folder/:folderId')
         .get(authenticate.isAuthenticated, controllers.folderControl.getFolder);
-
+  
+    //update folder
     app.route('/update/folder/:folderId')
         .put(authenticate.isAuthenticated, controllers.folderControl.updateFolder);
-
+    
+    //folder details
     app.route('/project/folders/:projectId')
         .get(authenticate.isAuthenticated, controllers.folderControl.fetchFolder);
 
