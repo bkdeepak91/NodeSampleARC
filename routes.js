@@ -13,7 +13,7 @@ module.exports = (app, controllers) => {
         .post(authenticate.isAuthenticated, controllers.userControl.addUser);
     
     // User Updation
-    app.route('/update/user/')
+    app.route('/update/user')
         .put(authenticate.isAuthenticated, controllers.userControl.updateUser);
     
     // Project Creation
