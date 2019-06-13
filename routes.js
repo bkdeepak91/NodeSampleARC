@@ -29,5 +29,4 @@ module.exports = (app, controllers) => {
     app.route('/create/folder')
         .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
     
-
 }
