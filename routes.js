@@ -8,7 +8,6 @@ module.exports = (app, controllers) => {
     app.route('/user/token/:emailId')
         .get(controllers.userControl.getToken);
     
-   
     // User Creation
     app.route('/add/user')
         .post(authenticate.isAuthenticated, controllers.userControl.addUser);
@@ -49,6 +48,5 @@ module.exports = (app, controllers) => {
     //folder details
     app.route('/project/folders/:projectId')
         .get(authenticate.isAuthenticated, controllers.folderControl.fetchFolder);
-
 
 }
