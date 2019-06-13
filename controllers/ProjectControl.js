@@ -2,6 +2,7 @@ var project = require('../repository/Project');
 var userType = require('../models/UserType');
 
 var projectControl = {
+    //Create Project
     createProject: (req, res) => {
         var Project = {
             name: req.body.name,
@@ -31,6 +32,7 @@ var projectControl = {
         });
     },
 
+    // Update Project
     updateProject: (req, res) => {
         var Project = {
             id: req.params.projectId,
@@ -60,6 +62,7 @@ var projectControl = {
         });
     },
 
+    // Share Project
     shareProject: (req, res) => {
         var Project = {
             projectId: req.body.projectId,
@@ -90,10 +93,11 @@ var projectControl = {
         });
     },
 
-    // Get Project
+    // Get Project  
     getProject: (req, res) => {
 
         var projectId = req.params.projectId;
+        // Getting the project details
         project.getProject(projectId, (err, projectData) => {
             var apiResult = {};
 
@@ -106,6 +110,7 @@ var projectControl = {
                 apiResult.data = [];
                 res.json(apiResult);
             } else {
+                //Getting the user details
                 project.getUsersByProject(projectId, (erruser, userData) => {
                     if (erruser) {
                         apiResult.metaData = {
