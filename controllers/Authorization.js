@@ -10,7 +10,7 @@ var authControl = {
             if(err || userDetails == undefined){
                 apiResult.meta = {
                     success : false,
-                    error : "Unauthorised!"
+                    error : "Unauthorized!"
                 };
                 apiResult.data = [];
                 res.status(401).json(apiResult);
@@ -19,7 +19,7 @@ var authControl = {
                 if(userDetails.type == userType.NO_ACCESS){
                     apiResult.meta = {
                         success : false,
-                        error : "Unauthorised!"
+                        error : "Unauthorized!"
                     };
                     apiResult.data = [];
                     res.status(401).json(apiResult);

@@ -18,4 +18,18 @@ module.exports = (app, controllers) => {
 
     app.route('/create/folder')
         .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
+
+    app.route('/share/folder')
+        .post(authenticate.isAuthenticated, controllers.folderControl.shareFolder);
+
+    app.route('/folder/:folderId')
+        .get(authenticate.isAuthenticated, controllers.folderControl.getFolder);
+
+    app.route('/update/folder/:folderId')
+        .put(authenticate.isAuthenticated, controllers.folderControl.updateFolder);
+
+    app.route('/project/folders/:projectId')
+        .get(authenticate.isAuthenticated, controllers.folderControl.fetchFolder);
+
+
 }
