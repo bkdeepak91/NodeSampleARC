@@ -30,6 +30,4 @@ module.exports = (app, controllers) => {
         .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
     
 
-
-        
 }
