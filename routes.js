@@ -10,12 +10,23 @@ module.exports = (app, controllers) => {
     
    
     // User Creation
-    app.route('/add/user/')
+    app.route('/add/user')
         .post(authenticate.isAuthenticated, controllers.userControl.addUser);
 
-    app.route('/create/project')
+    app.route('/project')
         .post(authenticate.isAuthenticated, controllers.projectControl.createProject);
+    
+    app.route('/project/:projectId')
+        .get(authenticate.isAuthenticated, controllers.projectControl.getProject)
+        .put(authenticate.isAuthenticated, controllers.projectControl.updateProject);
+
+    app.route('/share/project')
+        .post(authenticate.isAuthenticated, controllers.projectControl.shareProject);
 
     app.route('/create/folder')
         .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
+    
+
+
+        
 }

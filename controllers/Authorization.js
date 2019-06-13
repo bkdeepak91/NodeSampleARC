@@ -38,7 +38,7 @@ var authControl = {
                     id: userDetails.id,
                     type: userDetails.type
                 }
-    
+
                 next();
             }
 
