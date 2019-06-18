@@ -8,19 +8,17 @@ module.exports = (app, controllers) => {
     app.route('/user/token/:emailId')
         .get(controllers.userControl.getToken);
     
-    // User Creation
-    app.route('/add/user')
-        .post(authenticate.isAuthenticated, controllers.userControl.addUser);
-    
-    // User Updation
-    app.route('/update/user')
+    // User Create and Update
+    app.route('/user')
+        .post(authenticate.isAuthenticated, controllers.userControl.addUser)
         .put(authenticate.isAuthenticated, controllers.userControl.updateUser);
+        
     
-    // Project Creation
-    app.route('/create/project')
+    // Project Create
+    app.route('/project')
         .post(authenticate.isAuthenticated, controllers.projectControl.createProject);
     
-    // Project Details get and updation
+    // Project Details get and update
     app.route('/project/:projectId')
         .get(authenticate.isAuthenticated, controllers.projectControl.getProject)
         .put(authenticate.isAuthenticated, controllers.projectControl.updateProject);
@@ -30,7 +28,7 @@ module.exports = (app, controllers) => {
         .post(authenticate.isAuthenticated, controllers.projectControl.shareProject);
 
     //create folder
-    app.route('/create/folder')
+    app.route('/folder')
         .post(authenticate.isAuthenticated, controllers.folderControl.createFolder);
     
     //share folder
@@ -39,10 +37,7 @@ module.exports = (app, controllers) => {
     
     //folder get
     app.route('/folder/:folderId')
-        .get(authenticate.isAuthenticated, controllers.folderControl.getFolder);
-  
-    //update folder
-    app.route('/update/folder/:folderId')
+        .get(authenticate.isAuthenticated, controllers.folderControl.getFolder)
         .put(authenticate.isAuthenticated, controllers.folderControl.updateFolder);
     
     //folder details
