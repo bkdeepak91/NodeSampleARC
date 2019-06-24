@@ -4,34 +4,30 @@ var logger = require('../models/errorLogger');
 
 var userControl = {
     // Gets the user token by using email
-    getToken : async(req, res) => {
+    getToken : (req, res) => {
         var email = req.params.emailId;
-        try {
-            await user.getTokenByEmail(email, (err, token) => {
-                var apiResult = {};
 
-                if(err){
-                    apiResult.meta = {
-                        success : false,
-                        error : err
-                    };
+        user.getTokenByEmail(email, (err, token) => {
+            var apiResult = {};
 
-                    apiResult.data = [];
-                    res.json(apiResult);
-                } else {
-                    apiResult.meta = {
-                        success : true,
-                        rows : 1
-                    };
+            if(err){
+                apiResult.meta = {
+                    success : false,
+                    error : err
+                };
 
-                    apiResult.data = token;
-                    res.json(apiResult);
-                }
-            });
-        }catch (e) {
-            //Error Handling
-            logger.error('User controller caught exception: ' , e);
-          }
+                apiResult.data = [];
+                res.json(apiResult);
+            } else {
+                apiResult.meta = {
+                    success : true,
+                    rows : 1
+                };
+
+                apiResult.data = token;
+                res.json(apiResult);
+            }
+        });
     },
 
     // User Creation
