@@ -10,6 +10,9 @@ const routes = require('./routes');
 
 const app = express();
 
+//Error handler
+var logger = require('./models/errorLogger');
+
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -23,5 +26,6 @@ console.log('Node Sample API server started on: ' + port);
 process.on('uncaughtException', function (err) {
     var error = new Error(err);
     console.log('Caught unhandled exception: ' , error);
-    process.kill(process.pid, 'SIGTERM');
+    logger.error('Caught unhandled exception: ' , error);
+    // process.kill(process.pid, 'SIGTERM');   
 });
