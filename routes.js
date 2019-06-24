@@ -7,17 +7,11 @@ module.exports = (app, controllers) => {
     // User Token Get
     app.route('/user/token/:emailId')
         .get(controllers.userControl.getToken);
-
+    
     // User Create and Update
     app.route('/user')
         .post(authenticate.isAuthenticated, controllers.userControl.addUser)
         .put(authenticate.isAuthenticated, controllers.userControl.updateUser);
-
-    // User Create and Update
-    app.route('/user')
-        .post(authenticate.isAuthenticated, controllers.userControl.addUser)
-        .put(authenticate.isAuthenticated, controllers.userControl.updateUser);
-
     
     // Project Create
     app.route('/project')
