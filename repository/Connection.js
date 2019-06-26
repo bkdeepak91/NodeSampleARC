@@ -1,4 +1,6 @@
 var mysql = require('mysql');
+var util = require('util');
+
 
 var connection = mysql.createConnection({
     host: '192.168.10.67',
@@ -9,6 +11,5 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-
+connection.query = util.promisify(connection.query).bind(connection);
 module.exports = connection;
-
