@@ -41,44 +41,50 @@ var userControl = {
         };
         var apiResult = {};
 
-        // Checking user existence
-        var existingUser = await user.getTokenByEmail(User.email);
+        try {
+            // Checking user existence
+            var existingUser = await user.getTokenByEmail(User.email);
 
-        console.log(existingUser);
+            console.log(existingUser);
 
-        // If User doesn't exists
-        if (existingUser == undefined) {
+            // If User doesn't exists
+            if (existingUser == undefined) {
 
-            // Adding new user
-            var insertedUser = await user.addUser(User);
+                // Adding new user
+                var insertedUser = await user.addUser(User);
 
-            if (insertedUser == undefined) {
+                if (insertedUser == undefined) {
+                    apiResult.meta = {
+                        success: false,
+                        error: err
+                    };
+                    apiResult.data = [];
+                    res.json(apiResult);
+                } else {
+                    apiResult.meta = {
+                        success: true,
+                        rows: 1
+                    };
+
+                    apiResult.data = insertedUser;
+                    res.json(apiResult);
+                }
+            }
+            // If user exists 
+            else {
                 apiResult.meta = {
                     success: false,
-                    error: err
+                    error: "Existing User"
                 };
+
                 apiResult.data = [];
-                res.json(apiResult);
-            } else {
-                apiResult.meta = {
-                    success: true,
-                    rows: 1
-                };
-
-                apiResult.data = insertedUser;
-                res.json(apiResult);
+                res.status(401).json(apiResult);
             }
+        } catch (e) {
+            //Error Handling
+            logger.error('User controller caught exception: ', e);
         }
-        // If user exists 
-        else {
-            apiResult.meta = {
-                success: false,
-                error: "Existing User"
-            };
 
-            apiResult.data = [];
-            res.status(401).json(apiResult);
-        }
     },
 
 
@@ -92,26 +98,32 @@ var userControl = {
         };
         var apiResult = {};
 
-        // Checking user existence
-        //var existingUser = await user.getTokenByEmail(User.email);
-        var updatedUser = await user.updateUser(User);
-        if (updatedUser == undefined) {
-            apiResult.meta = {
-                success: false,
-                error: err
-            };
+        try {
+            // Checking user existence
+            //var existingUser = await user.getTokenByEmail(User.email);
+            var updatedUser = await user.updateUser(User);
+            if (updatedUser == undefined) {
+                apiResult.meta = {
+                    success: false,
+                    error: err
+                };
 
-            apiResult.data = [];
-            res.json(apiResult);
-        } else {
-            apiResult.meta = {
-                success: true,
-                rows: 1
-            };
+                apiResult.data = [];
+                res.json(apiResult);
+            } else {
+                apiResult.meta = {
+                    success: true,
+                    rows: 1
+                };
 
-            apiResult.data = updatedUser;
-            res.json(apiResult);
+                apiResult.data = updatedUser;
+                res.json(apiResult);
+            }
+        } catch (e) {
+            //Error Handling
+            logger.error('User controller caught exception: ', e);
         }
+
     }
 
 }
