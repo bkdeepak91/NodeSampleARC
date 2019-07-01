@@ -1,5 +1,6 @@
 var user = require('../repository/User');
 var userType = require('../models/UserType');
+var logger = require('../models/errorLogger');
 
 var userControl = {
     // Gets the user token by using email
