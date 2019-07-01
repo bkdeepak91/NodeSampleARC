@@ -1,6 +1,6 @@
 #=====Error Log====#
-.log*
-logs/*
+# .log*
+# logs/*
 
 
 #=====Node Module=====#
