@@ -1,63 +1,76 @@
 var folder = require('../repository/Folder');
+var logger = require('../models/errorLogger');
 
 var folderControl = {
-    createFolder: (req, res) => {
+    createFolder: async (req, res) => {
         var Folder = {
             name: req.body.name,
             projectId: req.body.projectId,
             createdBy: req.user.id
 
         };
-        folder.createFolder(Folder, (err, folderData) => {
-            var apiResult = {};
-            if (err) {
-                apiResult.metaData = {
-                    success: false,
-                    error: err
-                };
-                apiResult.data = [];
-                res.json(apiResult);
-            } else {
-                apiResult.metaData = {
-                    success: true,
-                    rows: 1
-                };
 
-                apiResult.data = folderData;
-                res.json(apiResult);
-            }
-        });
+
+        var apiResult = {};
+    try{
+        var createdFolder = await folder.createFolder(Folder);
+
+
+        if (createdFolder == undefined) {
+            apiResult.metaData = {
+                success: false,
+                error: err
+            };
+            apiResult.data = [];
+            res.json(apiResult);
+        } else {
+            apiResult.metaData = {
+                success: true,
+                rows: 1
+            };
+
+            apiResult.data = createdFolder;
+            res.json(apiResult);
+        }
+      }catch(e){
+          logger.error('folder control caught exception:',e);
+      }
+
     },
 
-    updateFolder: (req, res) => {
+    updateFolder: async (req, res) => {
         var UpdateFolder = {
             name: req.body.name,
             id: req.params.folderId
 
         };
-        folder.updateFolder(UpdateFolder, (err, folderData) => {
-            var apiResult = {};
-            if (err) {
-                apiResult.metaData = {
-                    success: false,
-                    error: err
-                };
-                apiResult.data = [];
-                res.json(apiResult);
-            } else {
-                apiResult.metaData = {
-                    success: true,
-                    rows: 1
-                };
-                apiResult.data = folderData;
-                res.json(apiResult);
-            }
-        });
+        var apiResult = {};
+    try{
+        var updatedFolder = await folder.updateFolder(UpdateFolder);
+        if (updatedFolder == undefined) {
+            apiResult.metaData = {
+                success: false,
+                error: err
+            };
+            apiResult.data = [];
+            res.json(apiResult);
+        } else {
+            apiResult.metaData = {
+                success: true,
+                rows: 1
+            };
+            apiResult.data = updatedFolder;
+            res.json(apiResult);
+        }
+        }catch(e){
+            logger.error('folder control caught exception:',e);   
+        } 
+
 
     },
 
-    shareFolder: (req, res) => {
-        var ShareFolder = {
+    shareFolder: async (req, res) => {
+        var shareFolderObj = {
             userId: req.body.userId,
             folderId: req.body.folderId,
             mode: req.body.mode,
@@ -65,61 +78,69 @@ var folderControl = {
             validity: req.body.validity
         };
 
+        var apiResult = {};
+    try{
+        var sharedFolder = await folder.shareFolder(shareFolderObj);
+         
+        if (sharedFolder == undefined) {
+            apiResult.metaData = {
+                success: false,
+                error: err
+            };
+            apiResult.data = [];
+            res.json(apiResult);
+        } else {
+            apiResult.metaData = {
+                success: true,
+                rows: 1
+            };
 
+            apiResult.data = sharedFolder;
+            res.json(apiResult);
+        }
+      } catch(e) { 
+        logger.error('folder control caught exception:',e);
+      }
 
-        folder.shareFolder(ShareFolder, (err, folderData) => {
-            var apiResult = {};
-            if (err) {
-                apiResult.metaData = {
-                    success: false,
-                    error: err
-                };
-                apiResult.data = [];
-                res.json(apiResult);
-            } else {
-                apiResult.metaData = {
-                    success: true,
-                    rows: 1
-                };
-
-                apiResult.data = folderData;
-                res.json(apiResult);
-            }
-        });
 
     },
 
-    fetchFolder: (req, res) => {
+    fetchFolder: async (req, res) => {
         var projectId = req.params.projectId;
-        
 
-        folder.fetchFolder(projectId, (err, folderData) => {
-            var apiResult = {};
-            if (err) {
-                apiResult.metaData = {
-                    success: false,
-                    error: err
-                };
-                apiResult.data = [];
-                res.json(apiResult);
-            } else {
-                apiResult.metaData = {
-                    success: true,
-                    rows: 1
-                };
+        var apiResult = {};
+    try{
+        var fetchedFolder = await folder.fetchFolder(projectId);
+        if (fetchedFolder == undefined) {
+            apiResult.metaData = {
+                success: false,
+                error: err
+            };
+            apiResult.data = [];
+            res.json(apiResult);
+        } else {
+            apiResult.metaData = {
+                success: true,
+                rows: 1
+            };
 
-                apiResult.data = folderData;
-                res.json(apiResult);
-            }
-        });
+            apiResult.data = fetchedFolder;
+            res.json(apiResult);
+        }
+       }catch(e) {
+        logger.error('folder control caught exception:',e);
+       }
+
     },
 
-    getFolder : (req, res) => {
+    getFolder: async (req, res) => {
         var folderId = req.params.folderId;
 
-        folder.getFolder(folderId, (err, folderData) => {
-            var apiResult = {};
-            if (err) {
+
+        var apiResult = {};
+        try{
+            var gotFolder = await folder.getFolder(folderId);
+            if (gotFolder == undefined) {
                 apiResult.metaData = {
                     success: false,
                     error: err
@@ -127,8 +148,9 @@ var folderControl = {
                 apiResult.data = [];
                 res.json(apiResult);
             } else {
-                folder.getUsersByFolder(folderId, (userErr, userData) => {
-                    if(userErr){
+                 var folderUserDetails  = await folder.getUsersByFolder(folderId);
+                 try{
+                    if (folderUserDetails == undefined) {
                         apiResult.metaData = {
                             success: false,
                             error: err
@@ -140,14 +162,20 @@ var folderControl = {
                             success: true,
                             rows: 1
                         };
-                        folderData.users = userData;
-                        apiResult.data = folderData;
+                        gotFolder.users = folderUserDetails;
+                        apiResult.data = gotFolder;
                         res.json(apiResult);
                     }
-
-                });
+                } catch(e){
+                    logger.error('folder control caught exception:',e);
+                }
+    
+                
             }
-        });
+        }catch(e) {
+            logger.error('folder control caught exception:',e);
+        }
+
     }
 };
 
